@@ -118,10 +118,11 @@ void initTaskQueueFromFile(TaskQueue *tq, FILE *fp) {
     @param TaskQueue *tq - The task queue we're printing
 */
 void printTaskQueue(TaskQueue *tq) {
-    printf("Printing a task queue with %d tasks!\n", tq->tasksCounter);
     int i = 0;
     int j = 0;
     int z = 0;
+
+    printf("Printing a task queue with %d tasks!\n", tq->tasksCounter);
 
     while (i < tq->tasksCounter) {
         i = pow(2, z);
@@ -211,9 +212,9 @@ void addToTaskQueue(TaskQueue *tq, Task *newTask) {
     int newPos = tq->tasksCounter;
 
     tq->tasksCounter += 1;
-    tq->tasks[newPos] = newTask; // Put the new task at the end of the heap
+    tq->tasks[newPos] = newTask; /* Put the new task at the end of the heap */
 
-    // As long as the new priority is bigger than the parent node priority, we keep going up
+    /* As long as the new priority is bigger than the parent node priority, we keep going up */
     while (newPos > 0 && tq->tasks[newPos]->taskPriority > tq->tasks[getParentNode(newPos)]->taskPriority) {
         tmp = tq->tasks[getParentNode(newPos)];
         tq->tasks[getParentNode(newPos)] = tq->tasks[newPos];
@@ -270,7 +271,7 @@ Task *getRandomTask() {
     char name[TASK_NAME_LENGTH+1];
 
     sprintf(name, "W%d", getRandomNumber(1, 10));
-    createNewTask(name, priority, duration);
+    return createNewTask(name, priority, duration);
 }
 
 /*
@@ -282,11 +283,12 @@ Task *getRandomTask() {
     @param TaskQueue *taskQueue - A pointer to the task queue we're working with
 */
 void run(TaskQueue *taskQueue) {
-    printf("Started running!\n");
     Task *currTask, *randTask;
     int totalTime = 0;
     int i = 0;
-    
+
+    printf("Started running!\n");
+
     while (taskQueue->tasksCounter > 0) {
         i++;
 
@@ -298,7 +300,7 @@ void run(TaskQueue *taskQueue) {
 
         for (; currTask->taskDuration > 0; currTask->taskDuration--) {
             /* Check if a new task is coming, with a 0.02 probability */
-            if (getRandomNumber(RAND_NEW_TASK_PROB_LOWER_RANGE, RAND_NEW_TASK_PROB_UPPER_RANGE) == RAND_NEW_TASK_PROB) {
+            if (getRandomNumber(RAND_NEW_TASK_PROB_LOWER_RANGE, RAND_NEW_TASK_PROB_UPPER_RANGE) < RAND_NEW_TASK_PROB) {
                 randTask = getRandomTask();
                 printf("Detected random task! (%s with priority %d duration %d) \n", randTask->taskName, randTask->taskPriority, randTask->taskDuration);
                 addToTaskQueue(taskQueue, randTask);
@@ -316,7 +318,7 @@ int main() {
 
     srand(time(0)); /* Set the seed for our random variables*/
     
-    // fp = fopen("another_14_input.txt", "r");
+    /* fp = fopen("another_14_input.txt", "r"); */
     fp = fopen("maman_14_input.txt", "r");
 
     if (fp == NULL) {
