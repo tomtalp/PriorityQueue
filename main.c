@@ -9,21 +9,29 @@
 #define MAX_INPUT_ROW_LEN 10
 
 #define RAND_TIME_UPPER_RANGE 50
-#define RAND_TIME_LOWER_RANGE 0
+#define RAND_TIME_LOWER_RANGE 1
 
 #define RAND_PRIORITY_UPPER_RANGE 10
-#define RAND_PRIORITY_LOWER_RANGE 0
+#define RAND_PRIORITY_LOWER_RANGE 1
 
 #define RAND_NEW_TASK_PROB_UPPER_RANGE 100
 #define RAND_NEW_TASK_PROB_LOWER_RANGE 0
 #define RAND_NEW_TASK_PROB 2
 
+/*
+    A task object
+    Each task has a name, a priority (between 1-10) and a duration in fake time units (1-50)
+*/
 typedef struct Task {
     int taskPriority;
     int taskDuration;
     char taskName[TASK_NAME_LENGTH];
 } Task;
 
+/*
+    A task queue, implemented as a MaxHeap, where the weight of the nodes is determined by
+    the priority of the task
+*/
 typedef struct TaskQueue {
     Task *tasks[MAX_TASKS];
     int tasksCounter;
