@@ -316,6 +316,7 @@ int main() {
 
     srand(time(0)); /* Set the seed for our random variables*/
     
+    // fp = fopen("another_14_input.txt", "r");
     fp = fopen("maman_14_input.txt", "r");
 
     if (fp == NULL) {
